@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLiteApp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,14 +10,30 @@ namespace App12
 {
 	public partial class App : Application
 	{
-		public App ()
+        public const string DATABASE_NAME = "AR.db";
+        public static FriendRepository database;
+       
+        public App ()
 		{
 			InitializeComponent();
 
 			MainPage = new App12.MasterDetailPage1();
 		}
 
-		protected override void OnStart ()
+        public static FriendRepository Database
+        {
+            get
+            {
+                if (database == null)
+                {
+                    database = new FriendRepository(DATABASE_NAME);
+                }
+                return database;
+            }
+        }
+
+
+        protected override void OnStart ()
 		{
 			// Handle when your app starts
 		}

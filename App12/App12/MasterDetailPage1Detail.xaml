@@ -4,27 +4,20 @@
              x:Class="App12.MasterDetailPage1Detail"
              Title="Detail">
   <StackLayout Padding="10">
-    <Label Text="This is a detail page. To get the 'triple' line icon on each platform add a icon to each platform and update the 'Master' page with an Icon that references it."/>
-        <ListView  x:Name="listView">
+    <Label Text="Некий  текст"/>
+        <ListView x:Name="friendsList" ItemsSource="{Binding}" ItemSelected="OnItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout BackgroundColor="#eee"
-                        Orientation="Vertical">
+                        <ViewCell.View>
                             <StackLayout Orientation="Horizontal">
-
-                                <Label Text="{Binding summa_fakt}"
-                                TextColor="#f35e20" />
-                                <Label Text="{Binding komment}"
-                                HorizontalOptions="EndAndExpand"
-                                TextColor="#503026" />
-                                <Button Text="Учёт" Clicked="uchet_add" />
+                                <Label Text="{Binding Name}" FontSize="Medium" />
                             </StackLayout>
-                        </StackLayout>
+                        </ViewCell.View>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Text="Учёт"  x:Name="uchet"/>
+        <Button Text="Добавить" Clicked="CreateFriend" />
     </StackLayout>
 </ContentPage>

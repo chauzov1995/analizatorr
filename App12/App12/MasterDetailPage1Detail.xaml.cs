@@ -3,53 +3,73 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using SQLite;
 
 namespace App12
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MasterDetailPage1Detail : ContentPage
     {
+      
         public MasterDetailPage1Detail()
         {
             InitializeComponent();
-            List<categories> item = new List<categories>();
-            item.Add(new categories()
-            {
-                summa_fakt = "title",
-                komment = "subtitle",
-                id = "1"
+           
+           
+        }
+      
+    
 
-            });
-            item.Add(new categories()
-            {
-                summa_fakt = "title",
-                komment = "subtitle",
-                id = "2"
-            });
-            item.Add(new categories()
-            {
-                summa_fakt = "title",
-                komment = "subtitle",
-                id = "3"
-            });
-            listView.ItemsSource = item;
-        }
-        private void uchet_add(object sender, EventArgs e)
+        protected override void OnAppearing()
         {
-          //  (sender as Button).Parent. "Нажато!!!";
-            uchet.Text = "Нажато!!!";
+            friendsList.ItemsSource = App.Database.GetItems();
+
+
+
+
+
+
+
+
+
+            base.OnAppearing();
         }
+        // обработка нажатия элемента в списке
+        private async void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            Friend selectedFriend = (Friend)e.SelectedItem;
+            FriendPage friendPage = new FriendPage();
+            friendPage.BindingContext = selectedFriend;
+            await Navigation.PushAsync(friendPage);
+        }
+        // обработка нажатия кнопки добавления
+        private async void CreateFriend(object sender, EventArgs e)
+        {
+            Friend friend = new Friend();
+            FriendPage friendPage = new FriendPage();
+            friendPage.BindingContext = friend;
+            await Navigation.PushAsync(friendPage);
+        }
+
+
+
     }
 
+
+
+
+
+    [Table("categories")]
     public class categories
     {
+        [PrimaryKey, AutoIncrement, Column("_id")]
+        public int id { get; set; }
 
-        public string summa_fakt { get; set; }
-        public string summa_doh { get; set; }
+        public int summa_fakt { get; set; }
+        public int summa_doh { get; set; }
         public string komment { get; set; }
-        public string id { get; set; }
     }
 }
